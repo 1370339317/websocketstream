@@ -14,7 +14,7 @@ type WebSocketStream struct {
 	reader  io.Reader
 }
 type Dialer struct {
-	dialer *websocket.Dialer
+	Dialer *websocket.Dialer
 }
 type Upgrader struct {
 	ReadBufferSize  int
@@ -47,7 +47,7 @@ func IsWebSocketUpgrade(r *http.Request) bool {
 }
 
 func (d *Dialer) Dial(urlStr string, requestHeader http.Header) (*WebSocketStream, *http.Response, error) {
-	c, resp, err := d.dialer.Dial(urlStr, requestHeader)
+	c, resp, err := d.Dialer.Dial(urlStr, requestHeader)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -55,7 +55,7 @@ func (d *Dialer) Dial(urlStr string, requestHeader http.Header) (*WebSocketStrea
 	return NewWebSocketStream(c), resp, nil
 }
 
-var DefaultDialer = &Dialer{dialer: websocket.DefaultDialer}
+var DefaultDialer = &Dialer{Dialer: websocket.DefaultDialer}
 
 func (w *WebSocketStream) Close() error {
 	return w.conn.Close()
